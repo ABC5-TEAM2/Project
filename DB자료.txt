@@ -1,0 +1,132 @@
+create table tourist_Spot(
+	tourist_Spot_id number primary key,
+	MAIN_TITLE varchar2(3000) ,
+	GUGUN_NM varchar2(1000) ,
+	LAT decimal(8,6)  ,
+	LNG decimal(8,5)  ,
+	PLACE varchar2(1000)  ,
+	TITLE varchar2(3000)  ,
+	SUBTITLE varchar2(4000)  ,
+	ADDR1 varchar2(4000)  ,
+	CNTCT_TEL varchar2(1000)  ,
+	HOMEPAGE_URL varchar2(4000)  ,
+	TRFC_INFO varchar2(4000)  ,
+	HLDY_INFO varchar2(1000)  ,
+	USAGE_DAY_WEEK_AND_TIME varchar2(1000)  ,
+	USAGE_AMOUNT varchar2(1000)  ,
+	MIDDLE_SIZE_RM1 varchar2(2000)  ,
+	MAIN_IMG_NORMAL varchar2(2000)  ,
+	MAIN_IMG_THUMB varchar2(2000)  ,
+	ITEMCNTNTS varchar2(4000),
+	place_like number default 0,
+	restaurant_id number references restaurant(restaurant_id)
+);
+commit;
+
+select * from tourist_Spot;
+
+	create table restaurant(
+	restaurant_id number primary key,
+	MAIN_TITLE varchar2(500) ,
+	GUGUN_NM varchar2(500) ,
+	LAT decimal(8,6)  ,
+	LNG decimal(8,5)  ,
+	TITLE varchar2(1000)  ,
+	ADDR1 varchar2(2000)  ,
+	CNTCT_TEL varchar2(100)  ,
+	USAGE_DAY_WEEK_AND_TIME varchar2(1000)  ,
+	RPRSNTV_MENU varchar2(1000)  ,
+	MAIN_IMG_NORMAL varchar2(2000)  ,
+	MAIN_IMG_THUMB varchar2(2000)  ,
+	ITEMCNTNTS varchar2(4000)  
+);
+
+create table festival(
+	festival_id number primary key,
+	MAIN_TITLE varchar2(500) ,
+	GUGUN_NM varchar2(500) ,
+	LAT decimal(8,6)  ,
+	LNG decimal(8,5)  ,
+	PLACE varchar2(500)  ,
+	TITLE varchar2(500)  ,
+	SUBTITLE varchar2(500)  ,
+	MAIN_PLACE varchar2(500)  ,
+	ADDR1 varchar2(2000)  ,
+	CNTCT_TEL varchar2(100)  ,
+	HOMEPAGE_URL varchar2(500)  ,
+	TRFC_INFO varchar2(1000)  ,
+	USAGE_DAY_WEEK_AND_TIME varchar2(1000)  ,
+	USAGE_AMOUNT varchar2(500)  ,
+	MAIN_IMG_NORMAL varchar2(2000)  ,
+	MAIN_IMG_THUMB varchar2(2000)  ,
+	ITEMCNTNTS varchar2(4000)  ,
+	MIDDLE_SIZE_RM1 varchar2(1000)  
+);
+
+create table reply(
+    reply_id number primary key,
+    review_id number references review(review_id),
+    member_id varchar2(20) references member(member_id),
+    content varchar2(4000) not null,
+    created_time date default sysdate
+);
+
+create table recommand_course (
+    reply_id number primary key,
+    course_title varchar2(20) not null,
+    course_content varchar2(4000) not null,
+    course_hit number default 0,
+    course_like number default 0,
+    set_pic number not null
+);
+
+create table wish_list(
+    wishboard_id number primary key,
+    member_id varchar2(20) references member(member_id),
+    tourist_Spot_id number references tourist_Spot(tourist_Spot_id)
+);
+
+create table member(
+    member_id varchar2(20) primary key,
+    password varchar2(20) not null,
+    name varchar2(20) not null,
+    birth date not null,
+    phone_number varchar2(50) not null
+);
+
+create table review(
+    review_id number primary key,
+    member_id varchar2(20) REFERENCES member(member_id),
+    title varchar2(100) not null,
+    contents varchar2(4000) not null,
+    hit number default 0,
+    review_like number default 0,
+    created_time date default sysdate
+);
+select * from review;
+
+
+select * from review_img;
+create table review_img(
+    img_id number primary key,
+    review_id number REFERENCES review(review_id),
+    img_address varchar2(1000) not null
+);
+commit;
+select * from review_img where review_id =15 and original_filename='1111.jpg';
+create table course_set(
+    course_set_id number primary key,
+    tourist_Spot_id number REFERENCES tourist_Spot(tourist_Spot_id),
+    set_pic number not null
+);
+
+create table wish_list_course(
+    wish_list_course_id number primary key,
+    member_id varchar2(20) REFERENCES member(member_id),
+    course_set_id number REFERENCES course_set(course_set_id)
+);
+
+
+select * from tab;
+commit;
+
