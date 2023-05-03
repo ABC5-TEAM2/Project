@@ -60,13 +60,7 @@ public class MemberController {
         if (result.hasErrors()) {
             return "member/joinForm";
         }
-        // 전화번호에 '-' 문자가 포함되어 있는지 확인한다.
-//        if (!joinForm.getPhone_number().contains("-")) {
-//            // BindingResult 객체에 GlobalError 를 추가한다.
-//            result.reject("emailError", "휴대폰 형식이 잘못되었습니다.");
-//            // member/joinForm.html 페이지를 리턴한다.
-//            return "member/joinForm";
-//        }
+       
         // 사용자로부터 입력받은 아이디로 데이터베이스에서 Member 를 검색한다.
         Member member = memberMapper.findMember(joinForm.getMember_id());
         // 사용자 정보가 존재하면
@@ -106,6 +100,8 @@ public class MemberController {
         }
         // 사용자가 입력한 이이디에 해당하는 Member 정보를 데이터베이스에서 가져온다.
         Member member = memberMapper.findMember(loginForm.getMember_id());
+        log.info("member: {}", member);
+        
         // Member 가 존재하지 않거나 패스워드가 다르면
         if (member == null || !member.getPassword().equals(loginForm.getPassword())) {
             // BindingResult 객체에 GlobalError 를 발생시킨다.

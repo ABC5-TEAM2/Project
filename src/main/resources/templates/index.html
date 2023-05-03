@@ -10,77 +10,83 @@
     	
     <script th:inline="javascript">
     
-	    function getRestaurant(data){
-	    	let restaurant_id ;
-	    	
-	         $.ajax({
-	           url: "/restaurant/" +restaurant_id,
-	           type: "post",
-	          
-	           success: function (data, success, xhr) {
-	             console.log(data);
-	             
-	            //지역 정하기 
-	             const data1 = data.filter((item)=>{
-	            	 return item.gugun_nm=='중구' 
-	            	 })
-	          	getDb(data1)
-	           },
-	           error: function (xhr, status, error) {
-	             console.log(status);
-	           }
-	         });
-	    	}
+    
+///////////////중구 레스토랑 찾기 & 길찾기 기능으로 연결 /////////////////////////////////////////////////////////////////////////
+ function getRestaurant(data){
+ 	let restaurant_id ;
+ 	
+      $.ajax({
+        url: "/restaurant/" +restaurant_id,
+        type: "post",
+       
+        success: function (data, success, xhr) {
+          console.log(data);
+          
+         //지역 정하기 
+          const data1 = data.filter((item)=>{
+         	 return item.gugun_nm=='중구' 
+         	 })
+       	getDb(data1)
+        },
+        error: function (xhr, status, error) {
+          console.log(status);
+        }
+      });
+ 	}
+ 
+///////////////중구 명소 찾기 & 길찾기 기능으로 연결 /////////////////////////////////////////////////////////////////////////
+  function getTourist_Spot(data){
+  	let tourist_Spot_id ;
+  	
+       $.ajax({
+         url: "/tourist_Spot/" +tourist_Spot_id,
+         type: "post",
+        
+         success: function (data, success, xhr) {
+           console.log(data);
+           
+          //지역 정하기 
+           const data1 = data.filter((item)=>{
+          	 return item.gugun_nm=='중구' 
+          	 })
+        	getDb(data1)
+         },
+         error: function (xhr, status, error) {
+           console.log(status);
+         }
+       });
+  	}	
 	    
-	    function getTourist_Spot(data){
-	    	let tourist_Spot_id ;
-	    	
-	         $.ajax({
-	           url: "/tourist_Spot/" +tourist_Spot_id,
-	           type: "post",
-	          
-	           success: function (data, success, xhr) {
-	             console.log(data);
-	             
-	            //지역 정하기 
-	             const data1 = data.filter((item)=>{
-	            	 return item.gugun_nm=='중구' 
-	            	 })
-	          	getDb(data1)
-	           },
-	           error: function (xhr, status, error) {
-	             console.log(status);
-	           }
-	         });
-	    	}	
+///////////////중구 축제 찾기 & 길찾기 기능으로 연결 /////////////////////////////////////////////////////////////////////////
+   function getFestival(data){
+   	let festival_id ;
+            console.log(data);
+            console.log(festival_id);
+   	
+   	
+        $.ajax({
+          url: "/festival/" +festival_id,
+          type: "post",
+         
+          success: function (data, success, xhr) {
+            console.log(data);
+            
+           //***지역 정하기(검색했을 때 뜨게하는??) 
+            const data1 = data.filter((item)=>{
+           	 return item.gugun_nm=='중구' 
+           	 })
+         	getDb(data1)
+          },
+          error: function (xhr, status, error) {
+            console.log(status);
+          }
+        });
 	    
-	    function getFestival(data){
-	    	let festival_id ;
-	             console.log(data);
-	             console.log(festival_id);
-	    	
-	    	
-	         $.ajax({
-	           url: "/festival/" +festival_id,
-	           type: "post",
-	          
-	           success: function (data, success, xhr) {
-	             console.log(data);
-	             
-	            //***지역 정하기(검색했을 때 뜨게하는??) 
-	             const data1 = data.filter((item)=>{
-	            	 return item.gugun_nm=='중구' 
-	            	 })
-	          	getDb(data1)
-	           },
-	           error: function (xhr, status, error) {
-	             console.log(status);
-	           }
-	         });
-	    	}	
+	    
+	   
+/////////////// data1에 정보가 있으면 지도에 띄우게 해서 마커로 길찾기 기능 /////////////////////////////////////////////////////////////////////////
     function getDb(data1){
  	   console.log(data1);
- 	   
  	    
  	   //지도 표시
  	   const map= new google.maps.Map(document.getElementById("map"),{
@@ -182,13 +188,16 @@
 	          }
     }
     
-  
+    
+/////////////// 전철로 길찾기/////////////////////////////////////////////////////////////////////////
+
     function calcRouteByRail(lat,lng) {
     	navigator.geolocation.getCurrentPosition(
 	         (position) => {
         	   const myLat = position.coords.latitude;
 	           const myLng = position.coords.longitude;	 
 	           const mypos = new google.maps.LatLng(myLat,myLng);
+	           
                const arrivePos = new google.maps.LatLng(lat,lng);
 
 		        var request = {
@@ -236,6 +245,9 @@
 	         });
 	      }
     
+    
+/////////////// 버스로 길찾기/////////////////////////////////////////////////////////////////////////
+
     function calcRouteByBus(lat,lng) {
     	navigator.geolocation.getCurrentPosition(
 	         (position) => {
@@ -289,8 +301,10 @@
 	       		});
 	         });
 	      }
-	    $(function () {	
-	      });
+	      
+  $(function () {
+	  getDb()
+    });
     </script>
 </head>	
 <body>
@@ -328,7 +342,6 @@
     
     
     
-    <input type="button" value="부산 축제 " class="btn btn-outline-secondary"onclick="location.href='/festival/list'" >
     <div id="mapContainer">
 		<div id="map" ></div>
 		<div id="mapContent">	
@@ -337,7 +350,6 @@
     <script async defer src=
     "https://maps.googleapis.com/maps/api/js?key=AIzaSyD_FL3IrY7I_w7Cerf1pK28nSvyxby86Xg&callback=initMap" >
      </script>
-     
     
      
 </body>
