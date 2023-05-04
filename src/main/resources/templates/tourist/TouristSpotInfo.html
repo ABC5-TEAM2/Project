@@ -318,30 +318,29 @@ function getRestaurant(){
    
 /////////////// 좋아요/////////////////////////////////////////////////////////////////////////
 function like(touristSpotId) {
-	console.log(touristSpotId);
-	
-	$.ajax({
-	url: "like",
-	type: "POST",
-	data: { touristSpotId: touristSpotId },
-	success: function (result) {
-	     if (result.liked===true) {
-	       alert("좋아요가 추가되었습니다.");
-	       document.getElementById("like-btn").classList.remove("btn-danger");
-	       document.getElementById("like-btn").classList.add("btn-success");
-	       document.getElementById("like-btn").value = "좋아요 취소";
-	     } else {
-	       alert("좋아요가 삭제되었습니다.");
-	       document.getElementById("like-btn").classList.remove("btn-success");
-	       document.getElementById("like-btn").classList.add("btn-danger");
-	       document.getElementById("like-btn").value = "좋아요";
-	     }
-	 },
-	error: function (xhr, status, error) {
-	console.error(error);
-	}
-	});
-}       
+    console.log(touristSpotId);
+    	$.ajax({
+    	url: "like",
+    	type: "POST",
+    	data: { touristSpotId: touristSpotId },
+    	success: function (result) {
+    		        if (result.liked===true) {
+    		          alert("좋아요가 추가되었습니다.");
+    		          document.getElementById("like-btn").classList.remove("btn-danger");
+    		          document.getElementById("like-btn").classList.add("btn-success");
+    		          document.getElementById("like-btn").value = "좋아요 취소";
+    		        } else {
+    		          alert("좋아요가 삭제되었습니다.");
+    		          document.getElementById("like-btn").classList.remove("btn-success");
+    		          document.getElementById("like-btn").classList.add("btn-danger");
+    		          document.getElementById("like-btn").value = "좋아요";
+    		        }
+    		    },
+    		error: function (xhr, status, error) {
+    		console.error(error);
+    	}		
+    });
+  }  
 
 
 /////////////// 찜 기능 /////////////////////////////////////////////////////////////////////////
@@ -380,12 +379,15 @@ function myList(touristSpotId) {
 	
 		<div class="btn-group" role="group" aria-label="Basic mixed styles example">
 			
+			
 			<a th:unless="${#lists.contains(findTouristSpotLikes, member_id)}">
-				<input type="button" class="btn btn-danger" th:onclick="|like(*{tourist_Spot_id})|" value="좋아요" id="like-btn"> 
+				<input type="button" class="btn btn-danger"
+				th:onclick="|like(*{tourist_Spot_id})|" value="좋아요" id="like-btn"> 
 			</a>
 			<a th:if="${#lists.contains(findTouristSpotLikes, member_id)}">
-				<input type="button" class="btn btn-success" th:onclick="|like(*{tourist_Spot_id})|" value="좋아요 취소" id="like-btn"> 
-			</a>	
+			<input type="button" class="btn btn-success"
+				th:onclick="|like(*{tourist_Spot_id})|" value="좋아요 취소" id="like-btn"> 
+			</a>
 			
 			
 			<a th:unless="${#lists.contains(findTouristSpotMyList, member_id)}">
@@ -397,17 +399,8 @@ function myList(touristSpotId) {
 			
 			
 			<input type="button" class="btn btn-info"
-				onclick="location.href='/member/myList'" value="나의 찜 목록">
+				onclick="location.href='/member/likeList'" value="나의 찜 목록">
 			
-			
-			 <input type="button" class="btn btn-dark" 
-			   onclick="getRestaurant()" 
-			    value="맛집 찾기"> 
-			 
- 			 <input type="button" class="btn btn-warning" 
-				   onclick="getDb()" 
-				    value="명소 찾기"> 	
-				    
 			<!-- 이것도 어떤의미로 성공한 코드 
 			<input type="button" class="btn btn-dark" 
 		    th:data-gugun="${tourist_Spot.gugun_nm}" 
@@ -420,7 +413,10 @@ function myList(touristSpotId) {
 			th:onclick="location.href='/review/reviewList?main_title=[[${tourist_Spot.main_title}]]'" 
 			value="관련 리뷰 찾기">
 			
+
+			<a class="btn btn-danger" th:utext="'좋아요 수 : '+*{place_like}"></a>
 			
+			<a class="btn btn-warning" th:utext="'찜 수 미완성: '+*{wish_list}"></a>
 		</div>
 
 			<p>
@@ -479,7 +475,16 @@ function myList(touristSpotId) {
 		
 			
 	</div>
-
+	
+	<input type="button" class="btn btn-dark" 
+			   onclick="getRestaurant()" 
+			    value="맛집 찾기"> 
+			 
+ 			 <input type="button" class="btn btn-warning" 
+				   onclick="getDb()" 
+				    value="명소 찾기"> 	
+				    
+	<p>
 	<div id="mapContainer">
 		<div id="map"></div>
 		<div id="mapContent"></div>

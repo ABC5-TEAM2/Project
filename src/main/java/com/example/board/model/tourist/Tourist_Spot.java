@@ -30,6 +30,7 @@ public class Tourist_Spot {
 	private String itemcntnts;
 	private Long place_like;
 	private Long restaurant_id;
+	private Long wish_list;
 	private boolean liked;
 	private boolean jjim;
 	
@@ -41,12 +42,19 @@ public class Tourist_Spot {
   public void removePlace_like() {
       this.place_like--;
   }
-  
+  public void addWishList() {
+      this.wish_list++;
+  }
+
+public void removeWishList() {
+    this.wish_list--;
+}
+
   public void setLiked(boolean liked) {
 	    this.liked = liked;
 	  }
   public void setJjim(boolean jjim) {
 	    this.jjim = jjim;
 	  }
-
+  
 }

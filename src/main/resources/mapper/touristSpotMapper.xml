@@ -40,6 +40,7 @@
         update tourist_Spot
         <set>
             <if test="place_like != null">place_like = #{place_like},</if>
+            <if test="wish_list != null">wish_list = #{wish_list},</if>
         </set>
         where tourist_Spot_id = #{tourist_Spot_id}
     </update>

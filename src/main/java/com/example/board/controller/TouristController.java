@@ -133,7 +133,6 @@ public class TouristController {
 				touristSpot.setLiked(false);
 		    }
 		    touristMapper.updateTourist(touristSpot);
-		    log.info("touristSpot:{}",touristSpot);
 	    return ResponseEntity.ok(touristSpot);
 	  } else {
 	    // 관광지 정보가 없는 경우, 오류 응답을 반환합니다.
@@ -166,17 +165,18 @@ public class TouristController {
 		}
 		if (touristSpot != null) {
 			if(!findTouristSpotMyList.contains(member_id)) {
+				touristSpot.addWishList();
 				touristSpotMyList.setMember_id(member_id);
 				touristSpotMyList.setTourist_Spot_id(tourist_Spot_id);
 				touristMapper.saveMyList(touristSpotMyList);
 				touristSpot.setJjim(true);
 			}
 			else {
+				touristSpot.removeWishList();
 				touristMapper.deleteMyList(wishboard_id);
 				touristSpot.setJjim(false);
 		    }
-		    
-		    log.info("touristSpot:{}",touristSpot);
+		    touristMapper.updateTourist(touristSpot);
 		    
 	    return ResponseEntity.ok(touristSpot);
 	  } else {

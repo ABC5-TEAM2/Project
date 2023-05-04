@@ -177,12 +177,14 @@ public class FestivalController {
 		}
 		if (festival != null) {
 			if(!findFestivalMyList.contains(member_id)) {
+				festival.addWishList();
 				festivalMyList.setMember_id(member_id);
 				festivalMyList.setFestival_id(festival_id);
 				festivalMapper.saveMyList(festivalMyList);
 				festival.setJjim(true);
 			}
 			else {
+				festival.removeWishList();
 				festivalMapper.deleteMyList(wishboard_id);
 				festival.setJjim(false);
 		    }
