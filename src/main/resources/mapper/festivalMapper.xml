@@ -107,4 +107,14 @@
     </select>
     
     
+    <update id="addHit">
+		update festival
+		<set>
+			<if test="hit != null"> hit = #{hit}</if>
+		</set>
+		where festival_id = #{festival_id}
+	</update>
+        
+    
+    
 </mapper>

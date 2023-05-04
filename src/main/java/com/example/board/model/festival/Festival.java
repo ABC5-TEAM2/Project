@@ -30,7 +30,7 @@ public class Festival {
 	private String middle_size_rm1;
 	private Long wish_list;
 	private Long place_like;
-	
+	private Long hit;
 	private boolean liked;
 	private boolean jjim;
 
@@ -59,5 +59,7 @@ public class Festival {
 	  public void setJjim(boolean jjim) {
 		    this.jjim = jjim;
 		  }
-
+	  public void addHit() {
+		  this.hit++;
+	  }
 }

@@ -91,6 +91,10 @@ public class FestivalController {
  			log.info("축제 없음");
  			return "redirect:/festival/list";
  		}
+ 		festival.addHit();
+		festivalMapper.addHit(festival);
+ 		
+ 		
  		// 모델에 restaurant 객체를 저장한다.
  		model.addAttribute("festival", festival);
  		

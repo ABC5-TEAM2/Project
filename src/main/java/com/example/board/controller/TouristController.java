@@ -83,7 +83,13 @@ public class TouristController {
 			log.info("명소 없음");
 			return "redirect:/tourist_Spot/list";
 		}
+		tourist_Spot.addHit();
+		touristMapper.addHit(tourist_Spot);
+		
+		
+		
 		// 모델에 restaurant 객체를 저장한다.
+		
 		model.addAttribute("tourist_Spot", tourist_Spot);
 		log.info("tourist_Spot:{}",tourist_Spot);
 		List<String> findTouristSpotLikes = touristMapper.findLikesMemberId(tourist_Spot_id);
@@ -93,6 +99,7 @@ public class TouristController {
 		model.addAttribute("findTouristSpotMyList", findTouristSpotMyList);
 
 		model.addAttribute("member_id", loginMember.getMember_id());
+		
 		// board/read.html 를 찾아서 리턴한다.
 		return "tourist/TouristSpotInfo";
 		}

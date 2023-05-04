@@ -53,7 +53,7 @@ function getDb(){
 	                "click",
 	                (function(marker){
 	                    return function (){
-	                        infowindow.setContent("<h3>"+main_title+"</h3>"+"<p>"+itemcntnts+"<p>"+positions+"<p>"
+	                        infowindow.setContent("<h5>"+main_title+"</h5>"+"<p>"+itemcntnts+"<p>"+positions+"<p>"
 	                        //+ "<button type='button' class='btn btn-outline-primary' onclick='calcRoute()'>출발</button> "
 	                        +"<button type='button' class='btn btn-outline-primary' onclick='calcRouteByRail(" +lat+","+lng + ")'>Rail로 도착</button> "
 	                        +"<button type='button' class='btn btn-outline-primary' onclick='calcRouteByBus(" +lat+","+lng + ")'>Bus로 도착</button> "+"<p>"
@@ -229,8 +229,12 @@ function getRestaurant(){
     	    	let restaurant_id=[];
        	    	restaurant_id +=item["restaurant_id"];
        	    	
-    	    	const main_title = item["main_title"];
-    	    	const itemcntnts= item["itemcntnts"];
+       	    	let mainImgNormal =item["main_img_normal"];
+       	    	let rprsntv_menu =item["rprsntv_menu"];
+       	    	let cntct_tel =item["cntct_tel"];
+       	    	let addr1 =item["addr1"];
+       	    	
+       	    	let main_title = item["main_title"];
     	    	 //로케이션 별로 마크 생성
 	            marker = new google.maps.Marker({
 	                position: new google.maps.LatLng(lat,lng),
@@ -245,7 +249,9 @@ function getRestaurant(){
 	                "click",
 	                (function(marker){
 	                    return function (){
-	                        infowindow.setContent("<h3>"+main_title+"</h3>"+"<p>"+itemcntnts+"<p>"+positions+"<p>"
+	                        infowindow.setContent("<h3>"+main_title+"</h3>"
+	                        +"<img src='"+mainImgNormal+"' alt='restaurant image' style='width: 300px; height: 200px;'><br>"
+	                        +"<p>"+"<h5> 대표메뉴 : "+rprsntv_menu+"</h5>"+"<p>"+"<h5> 대표 전화번호 : "+cntct_tel+"</h5>"+"<p>"+"<h5> 주소 : "+addr1+"</h5>"+"<p>"+"<p>"
 	                        +"<button type='button' class='btn btn-outline-primary' onclick=\"location.href='/restaurant/RestaurantInfo?restaurant_id=" + restaurant_id + "'\">레스토랑 정보</button>"
 	                        +"<button type='button' class='btn btn-outline-primary' onclick='calcRoute(" +lat+","+lng + ")'>명소에서 최단 거리 찾기</button> "
 	                        );
@@ -416,7 +422,7 @@ function myList(touristSpotId) {
 
 			<a class="btn btn-danger" th:utext="'좋아요 수 : '+*{place_like}"></a>
 			
-			<a class="btn btn-warning" th:utext="'찜 수 미완성: '+*{wish_list}"></a>
+			<a class="btn btn-warning" th:utext="'조회수 : '+*{hit}"></a>
 		</div>
 
 			<p>

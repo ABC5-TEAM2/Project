@@ -9,6 +9,7 @@ import com.example.board.model.festival.Festival;
 import com.example.board.model.festival.FestivalLikes;
 import com.example.board.model.festival.FestivalMyList;
 import com.example.board.model.tourist.TouristSpotMyList;
+import com.example.board.model.tourist.Tourist_Spot;
 
 
 @Mapper
@@ -53,6 +54,14 @@ public interface FestivalMapper {
 	
 	//
 	List<Map<String, Object>> findMyListByMemberId(String member_id);
+	
+	
+	
+	//조회수
+	void addHit(Festival festival);
+	
+	
+	
 
 }
 

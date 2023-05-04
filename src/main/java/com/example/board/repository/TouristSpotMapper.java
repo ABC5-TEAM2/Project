@@ -53,4 +53,9 @@ public interface TouristSpotMapper {
 //찜 목록
 	List<Map<String, Object>> findMyListByMemberId(String member_id);
 	
+	
+	//조회수
+	void addHit(Tourist_Spot tourist_Spot);
+	
+	
 }

@@ -108,4 +108,15 @@
     </select>
     
     
+    <update id="addHit">
+		update tourist_Spot
+		<set>
+			<if test="hit != null"> hit = #{hit}</if>
+		</set>
+		where tourist_Spot_id = #{tourist_Spot_id}
+	</update>
+    
+    
+    
+    
 </mapper>
