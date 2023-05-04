@@ -15,7 +15,8 @@
 
 <script th:inline="javascript">
 
-	
+
+///////////////////////////////////////기본 장소 지도 //////////////////////////////////////
 function getDb(){
 	
 	   //지도 표시
@@ -134,7 +135,7 @@ function calcRouteByRail(lat,lng) {
       directionsDisplay.setMap(maps);
       
       directionsService.route(request, function(response, status) {
-        alert(status);  // 확인용 Alert..미사용시 삭제
+        alert(status+"  (전철이 없을경우 버스 경로가 나옵니다)");  // 확인용 Alert..미사용시 삭제
          if (status === google.maps.DirectionsStatus.OK) {
        	  directionsDisplay.setDirections(response);
        	  
@@ -165,10 +166,10 @@ function calcRouteByRail(lat,lng) {
        };
        let directionsService = new google.maps.DirectionsService();
        let directionsDisplay = new google.maps.DirectionsRenderer();
-       maps = new google.maps.Map(document.getElementById('map1'), map);
+       maps = new google.maps.Map(document.getElementById('map'), map);
        directionsDisplay.setMap(maps);
        directionsService.route(request, function(response, status) {
-         alert(status);  // 확인용 Alert..미사용시 삭제
+         alert(status+"  (버스가 없을경우 전철 경로가 나옵니다)");  // 확인용 Alert..미사용시 삭제
           if (status === google.maps.DirectionsStatus.OK) {
         	  directionsDisplay.setDirections(response);
         	  
@@ -225,6 +226,9 @@ function getRestaurant(){
     		 	let lng=[];
     	    	lat +=item["lat"]; 
     	    	lng +=item["lng"];	
+    	    	let restaurant_id=[];
+       	    	restaurant_id +=item["restaurant_id"];
+       	    	
     	    	const main_title = item["main_title"];
     	    	const itemcntnts= item["itemcntnts"];
     	    	 //로케이션 별로 마크 생성
@@ -242,7 +246,8 @@ function getRestaurant(){
 	                (function(marker){
 	                    return function (){
 	                        infowindow.setContent("<h3>"+main_title+"</h3>"+"<p>"+itemcntnts+"<p>"+positions+"<p>"
-	                        +"<button type='button' class='btn btn-outline-primary' onclick='calcRoute(" +lat+","+lng + ")'>최단 거리 찾기</button> "
+	                        +"<button type='button' class='btn btn-outline-primary' onclick=\"location.href='/restaurant/RestaurantInfo?restaurant_id=" + restaurant_id + "'\">레스토랑 정보</button>"
+	                        +"<button type='button' class='btn btn-outline-primary' onclick='calcRoute(" +lat+","+lng + ")'>명소에서 최단 거리 찾기</button> "
 	                        );
 	                        infowindow.open(map,marker);
 	                        if (marker.getAnimation() !== null) {
@@ -261,14 +266,13 @@ function getRestaurant(){
    
 /////////////// 최단경로 길찾기/////////////////////////////////////////////////////////////////////////
 
-   function calcRouteByBus(lat,lng) {
+   function calcRoute(lat,lng) {
    	
    	navigator.geolocation.getCurrentPosition(
          (position) => {
         	 
 			let touristLat = [[${tourist_Spot.lat}]];
 			let touristLng = [[${tourist_Spot.lng}]];
-		   
            const mypos = new google.maps.LatLng(touristLat,touristLng);
            const arrivePos = new google.maps.LatLng(lat,lng);
 
@@ -366,11 +370,7 @@ function myList(touristSpotId) {
 	}
 	});
 }         
-              
-   		             
-	$(function () {	
-		getDb();
-		      });
+
 </script>
 
 </head>
@@ -485,7 +485,7 @@ function myList(touristSpotId) {
 		<div id="mapContent"></div>
 	</div>
 	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_FL3IrY7I_w7Cerf1pK28nSvyxby86Xg&map_id=fc90010912035cfa&callback=initMap">
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_FL3IrY7I_w7Cerf1pK28nSvyxby86Xg&map_id=fc90010912035cfa&callback=getDb">
      </script>
 
 	

@@ -10,9 +10,9 @@
     	
     <script th:inline="javascript">
     
-    
-///////////////중구 레스토랑 찾기 & 길찾기 기능으로 연결 /////////////////////////////////////////////////////////////////////////
- function getRestaurant(data){
+
+ function getRestaurant(){
+	// 중구 레스토랑 찾기 & 길찾기 기능으로 연결  
  	let restaurant_id ;
  	
       $.ajax({
@@ -34,10 +34,9 @@
       });
  	}
  
-///////////////중구 명소 찾기 & 길찾기 기능으로 연결 /////////////////////////////////////////////////////////////////////////
-  function getTourist_Spot(data){
+  function getTourist_Spot(){
   	let tourist_Spot_id ;
-  	
+		/////중구 명소 찾기 & 길찾기 기능으로 연결 
        $.ajax({
          url: "/tourist_Spot/" +tourist_Spot_id,
          type: "post",
@@ -57,8 +56,8 @@
        });
   	}	
 	    
-///////////////중구 축제 찾기 & 길찾기 기능으로 연결 /////////////////////////////////////////////////////////////////////////
-   function getFestival(data){
+   function getFestival(){
+	 ///중구 축제 찾기 & 길찾기 기능으로 연결 //
    	let festival_id ;
             console.log(data);
             console.log(festival_id);
@@ -84,8 +83,8 @@
 	    
 	    
 	   
-/////////////// data1에 정보가 있으면 지도에 띄우게 해서 마커로 길찾기 기능 /////////////////////////////////////////////////////////////////////////
     function getDb(data1){
+   //// data1에 정보가 있으면 지도에 띄우게 해서 마커로 길찾기 기능
  	   console.log(data1);
  	    
  	   //지도 표시
@@ -189,9 +188,8 @@
     }
     
     
-/////////////// 전철로 길찾기/////////////////////////////////////////////////////////////////////////
-
     function calcRouteByRail(lat,lng) {
+   //// 전철로 길찾기	
     	navigator.geolocation.getCurrentPosition(
 	         (position) => {
         	   const myLat = position.coords.latitude;
@@ -246,9 +244,9 @@
 	      }
     
     
-/////////////// 버스로 길찾기/////////////////////////////////////////////////////////////////////////
 
     function calcRouteByBus(lat,lng) {
+  /////// 버스로 길찾기/
     	navigator.geolocation.getCurrentPosition(
 	         (position) => {
         	   const myLat = position.coords.latitude;
@@ -348,7 +346,7 @@
 		</div>
 	</div>
     <script async defer src=
-    "https://maps.googleapis.com/maps/api/js?key=AIzaSyD_FL3IrY7I_w7Cerf1pK28nSvyxby86Xg&callback=initMap" >
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyD_FL3IrY7I_w7Cerf1pK28nSvyxby86Xg&callback=getTourist_Spot()" >
      </script>
     
      

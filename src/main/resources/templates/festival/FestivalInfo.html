@@ -53,7 +53,6 @@ function getDb(){
                     return function (){
                     	
                         infowindow.setContent("<h3>"+main_title+"</h3>"+"<p>"+itemcntnts+"<p>"+positions+"<p>"
-                        //+ "<button type='button' class='btn btn-outline-primary' onclick='calcRoute()'>출발</button> "
                         +"<button type='button' class='btn btn-outline-primary' onclick='calcRouteByRail(" +lat+","+lng + ")'>Rail로 도착</button> "
                         +"<button type='button' class='btn btn-outline-primary' onclick='calcRouteByBus(" +lat+","+lng + ")'>Bus로 도착</button> "+"<p>"
                         );
@@ -131,29 +130,9 @@ function getDb(){
 	        directionsDisplay.setMap(maps);
 	        
 	        directionsService.route(request, function(response, status) {
-	          alert(status);  // 확인용 Alert..미사용시 삭제
+	          alert(status+"  (전철이 없을경우 버스 경로가 나옵니다)");  // 확인용 Alert..미사용시 삭제
 		          if (status === google.maps.DirectionsStatus.OK) {
 		        	  directionsDisplay.setDirections(response);
-		        	  for (i = 0; i < response.routes.length; i++) {
-		        		  let route = response.routes[i];
-		        	        for (j = 0; j < route.legs.length; j++) {
-		        	        	let leg = route.legs[j];
-		        	            // Do something with leg attributes...
-		        	            let instruction1 ='';
-		        	            for (k = 0; k < leg.steps.length; k++) {
-		        	            	let step = leg.steps[k];
-		        	            	let distance = step.distance.text;    // fine
-		        	            	let duration = step.duration.text;    // fine
-		        	            	let instruction = step.instructions +" "+duration+",";   ////////////////////
-		        	                
-		        	                instruction1 += instruction;
-		        	                let mode = step.travel_mode;          // works
-		        	            }
-		        	            let result1 = instruction1.slice(0, -1);
-		        	                console.log(result1); 
-		        	            $("#mapContent").append(result1);
-		        	        }        
-		        	    }
 	        	  }else{
 	        		  return getDb()
 	        		  };
@@ -185,35 +164,23 @@ function calcRouteByBus(lat,lng) {
       maps = new google.maps.Map(document.getElementById('map'), map);
       directionsDisplay.setMap(maps);
       directionsService.route(request, function(response, status) {
-        alert(status);  // 확인용 Alert..미사용시 삭제
+        alert(status+"  (버스가 없을경우 전철 경로가 나옵니다)");  // 확인용 Alert..미사용시 삭제
          if (status === google.maps.DirectionsStatus.OK) {
        	  directionsDisplay.setDirections(response);
-       	  for (i = 0; i < response.routes.length; i++) {
-       		  let route = response.routes[i];
-       	        for (j = 0; j < route.legs.length; j++) {
-       	        	let leg = route.legs[j];
-       	            // Do something with leg attributes...
-       	            let instruction1 ='';
-       	            for (k = 0; k < leg.steps.length; k++) {
-       	            	let step = leg.steps[k];
-       	            	let distance = step.distance.text;    // fine
-       	            	let duration = step.duration.text;    // fine
-       	            	let instruction = step.instructions +" "+duration+",";   ////////////////////
-       	                instruction1 += instruction;
-       	                let mode = step.travel_mode;          // works
-       	            }
-       	            let result1 = instruction1.slice(0, -1);
-       	                console.log(result1); 
-       	            $("#mapContent").append(result1);
-       	        }        
-       	    }
+       	 
       	  }else{
       		  return getDb()
       		  };
     	}
    	)
    })}
+   
+/////////////// 맛집 상세 정보로 가기/////////////////////////////////////////////////////////////////////////
 
+function restaurantInfo(){
+	
+	
+}
 	
 /////////////// 맛집 정보 조건부로 가져오기/////////////////////////////////////////////////////////////////////////
 	
@@ -262,6 +229,10 @@ let restaurant_id;
    		 	let lng=[];
    	    	lat +=item["lat"]; 
    	    	lng +=item["lng"];	
+   	    	
+   	    	let restaurant_id=[];
+   	    	restaurant_id +=item["restaurant_id"];
+   	    	
    	    	const main_title = item["main_title"];
    	    	const itemcntnts= item["itemcntnts"];
    	    	 //로케이션 별로 마크 생성
@@ -279,7 +250,8 @@ let restaurant_id;
                 (function(marker){
                     return function (){
                         infowindow.setContent("<h3>"+main_title+"</h3>"+"<p>"+itemcntnts+"<p>"+positions+"<p>"
-                        +"<button type='button' class='btn btn-outline-primary' onclick='calcRoute(" +lat+","+lng + ")'>최단 거리 찾기</button> "
+                       	+"<button type='button' class='btn btn-outline-primary' onclick=\"location.href='/restaurant/RestaurantInfo?restaurant_id=" + restaurant_id + "'\">레스토랑 정보</button>"
+                        +"<button type='button' class='btn btn-outline-primary' onclick='calcRoute(" +lat+","+lng + ")'>축제에서 최단 거리 찾기</button> "
 						);
                         infowindow.open(map,marker);
                         if (marker.getAnimation() !== null) {
@@ -298,7 +270,7 @@ let restaurant_id;
 	          	    
 /////////////// 최단경로 길찾기/////////////////////////////////////////////////////////////////////////
 
-  function calcRouteByBus(lat,lng) {
+  function calcRoute(lat,lng) {
   	
   	navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -320,25 +292,6 @@ let restaurant_id;
           alert(status);  // 확인용 Alert..미사용시 삭제
            if (status === google.maps.DirectionsStatus.OK) {
          	  directionsDisplay.setDirections(response);
-         	  for (i = 0; i < response.routes.length; i++) {
-         		  let route = response.routes[i];
-         	        for (j = 0; j < route.legs.length; j++) {
-         	        	let leg = route.legs[j];
-         	            // Do something with leg attributes...
-         	            let instruction1 ='';
-         	            for (k = 0; k < leg.steps.length; k++) {
-         	            	let step = leg.steps[k];
-         	            	let distance = step.distance.text;    // fine
-         	            	let duration = step.duration.text;    // fine
-         	            	let instruction = step.instructions +" "+duration+",";   ////////////////////
-         	                instruction1 += instruction;
-         	                let mode = step.travel_mode;          // works
-         	            }
-         	            let result1 = instruction1.slice(0, -1);
-         	                console.log(result1); 
-         	            $("#mapContent").append(result1);
-         	        }        
-         	    }
         	  }else{
      		return getDb()
     	 };
@@ -505,7 +458,7 @@ function myList(festival_id) {
 		<div id="mapContent"></div>
 	</div>
 	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_FL3IrY7I_w7Cerf1pK28nSvyxby86Xg&callback=initMap">
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_FL3IrY7I_w7Cerf1pK28nSvyxby86Xg&callback=getDb">
      </script>
 
 

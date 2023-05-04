@@ -60,7 +60,6 @@ public class TouristController {
 		//List<Review> reviews = reviewService.findReviews(searchText, navi.getStartRecord(), navi.getCountPerPage());
 		
 		List<Tourist_Spot> findAllTourist = touristMapper.findAllTourist();
-
 		// Board 리스트를 model 에 저장한다.
 		model.addAttribute("findAllTourist", findAllTourist);
 		// PageNavigation 객체를 model 에 저장한다.
