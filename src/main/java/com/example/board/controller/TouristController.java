@@ -45,7 +45,6 @@ public class TouristController {
 
 		log.info("명소 실행");
 		List<Tourist_Spot> findAllTourist = touristMapper.findAllTourist();
-		log.info(" findAllTourist:{}", findAllTourist);
 		return ResponseEntity.ok(findAllTourist);
 	}
 
@@ -53,7 +52,6 @@ public class TouristController {
 	public String list(@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "searchText", defaultValue = "") String searchText, Model model) {
 		
-		log.info("searchText: {}", searchText);
 		//int total = reviewService.getTotal(searchText);
 		//PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		// 데이터베이스에 저장된 모든 Board 객체를 리스트 형태로 받는다.
@@ -91,7 +89,6 @@ public class TouristController {
 		// 모델에 restaurant 객체를 저장한다.
 		
 		model.addAttribute("tourist_Spot", tourist_Spot);
-		log.info("tourist_Spot:{}",tourist_Spot);
 		List<String> findTouristSpotLikes = touristMapper.findLikesMemberId(tourist_Spot_id);
 		model.addAttribute("findTouristSpotLikes", findTouristSpotLikes);
 		
@@ -116,7 +113,6 @@ public class TouristController {
 		Tourist_Spot touristSpot= touristMapper.findTouristSpot(tourist_Spot_id);
 		TouristSpotLikes touristSpotLike = new TouristSpotLikes();
 		String member_id = loginMember.getMember_id();
-		log.info("findLikesById:{}",findLikesById);
 		
 		Object like_id = null;
 		for (int i = 0; i < findLikesById.size(); i++) {
@@ -160,7 +156,6 @@ public class TouristController {
 		TouristSpotMyList touristSpotMyList = new TouristSpotMyList();
 		String member_id = loginMember.getMember_id();
 		
-		log.info("findMyListById:{}",findMyListById);
 		
 		Object wishboard_id = null;
 		for (int i = 0; i < findMyListById.size(); i++) {

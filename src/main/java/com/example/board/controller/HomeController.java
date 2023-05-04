@@ -32,5 +32,15 @@ public class HomeController {
         return "index";
     }
     
-    
+	@GetMapping("map")
+    public String Map(Model model) {
+		
+        return "map/map";
+    }
+	
+	@GetMapping("mapOnlyBusan")
+    public String mapOnlyBusan(Model model) {
+		
+        return "map/mapOnlyBusan";
+    }
 }

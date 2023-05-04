@@ -55,7 +55,6 @@ public class RestaurantController {
 	public String list(@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "searchText", defaultValue = "") String searchText, Model model) {
 		
-		log.info("searchText: {}", searchText);
 		
 		//int total = reviewService.getTotal(searchText);
 		//PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
@@ -80,7 +79,6 @@ public class RestaurantController {
 		// board_id 에 해당하는 게시글을 데이터베이스에서 찾는다.
 		
 		Restaurant restaurant= restaurantMapper.findRestaurant(restaurant_id);
-		log.info("restaurant:{}",restaurant);
 		// board_id에 해당하는 게시글이 없으면 리스트로 리다이렉트 시킨다.
 		if (restaurant == null) {
 			log.info("레스토랑 없음");

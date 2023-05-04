@@ -133,6 +133,25 @@ function getDb(){
 	          alert(status+"  (전철이 없을경우 버스 경로가 나옵니다)");  // 확인용 Alert..미사용시 삭제
 		          if (status === google.maps.DirectionsStatus.OK) {
 		        	  directionsDisplay.setDirections(response);
+		        	  for (i = 0; i < response.routes.length; i++) {
+		         		  let route = response.routes[i];
+		         	        for (j = 0; j < route.legs.length; j++) {
+		         	        	let leg = route.legs[j];
+		         	            // Do something with leg attributes...
+		         	            let instruction1 ='';
+		         	            for (k = 0; k < leg.steps.length; k++) {
+		         	            	let 	step = leg.steps[k];
+		         	            	let distance = step.distance.text;    // fine
+		         	            	let duration = step.duration.text;    // fine
+		         	            	let instruction = step.instructions +" "+duration+",";   ////////////////////
+		         	                instruction1 += instruction;
+		         	                let mode = step.travel_mode;          // works
+		         	            }
+		         	            let result1 = instruction1.slice(0, -1);
+		         	                console.log(result1); 
+		         	            $("#mapContent").append(result1);
+		         	        }        
+		         	    }
 	        	  }else{
 	        		  return getDb()
 	        		  };
@@ -167,7 +186,25 @@ function calcRouteByBus(lat,lng) {
         alert(status+"  (버스가 없을경우 전철 경로가 나옵니다)");  // 확인용 Alert..미사용시 삭제
          if (status === google.maps.DirectionsStatus.OK) {
        	  directionsDisplay.setDirections(response);
-       	 
+       	for (i = 0; i < response.routes.length; i++) {
+   		  let route = response.routes[i];
+   	        for (j = 0; j < route.legs.length; j++) {
+   	        	let leg = route.legs[j];
+   	            // Do something with leg attributes...
+   	            let instruction1 ='';
+   	            for (k = 0; k < leg.steps.length; k++) {
+   	            	let 	step = leg.steps[k];
+   	            	let distance = step.distance.text;    // fine
+   	            	let duration = step.duration.text;    // fine
+   	            	let instruction = step.instructions +" "+duration+",";   ////////////////////
+   	                instruction1 += instruction;
+   	                let mode = step.travel_mode;          // works
+   	            }
+   	            let result1 = instruction1.slice(0, -1);
+   	                console.log(result1); 
+   	            $("#mapContent").append(result1);
+   	        }        
+   	    }    
       	  }else{
       		  return getDb()
       		  };
@@ -252,7 +289,7 @@ let restaurant_id;
                 "click",
                 (function(marker){
                     return function (){
-                   	 infowindow.setContent("<h3>"+main_title+"</h3>"
+                    	 infowindow.setContent("<h3>"+main_title+"</h3>"
   	                        +"<img src='"+mainImgNormal+"' alt='restaurant image' style='width: 300px; height: 300px;'><br>"
   	                        +"<p>"+"<h5> 대표메뉴 : "+rprsntv_menu+"</h5>"+"<p>"+"<h5> 대표 전화번호 : "+cntct_tel+"</h5>"+"<p>"+"<h5> 주소 : "+addr1+"</h5>"+"<p>"+"<p>"
   	                        +"<button type='button' class='btn btn-outline-primary' onclick=\"location.href='/restaurant/RestaurantInfo?restaurant_id=" + restaurant_id + "'\">레스토랑 정보</button>"
@@ -281,6 +318,7 @@ let restaurant_id;
         (position) => {
         	let festivalLat = [[${festival.lat}]];
     	    let festivalLng = [[${festival.lng}]];
+    	    console.log(festivalLng);
           const mypos = new google.maps.LatLng(festivalLat,festivalLng);
           const arrivePos = new google.maps.LatLng(lat,lng);
 
@@ -297,7 +335,26 @@ let restaurant_id;
           alert(status);  // 확인용 Alert..미사용시 삭제
            if (status === google.maps.DirectionsStatus.OK) {
          	  directionsDisplay.setDirections(response);
-        	  }else{
+         	 for (i = 0; i < response.routes.length; i++) {
+         		  let route = response.routes[i];
+         	        for (j = 0; j < route.legs.length; j++) {
+         	        	let leg = route.legs[j];
+         	            // Do something with leg attributes...
+         	            let instruction1 ='';
+         	            for (k = 0; k < leg.steps.length; k++) {
+         	            	let 	step = leg.steps[k];
+         	            	let distance = step.distance.text;    // fine
+         	            	let duration = step.duration.text;    // fine
+         	            	let instruction = step.instructions +" "+duration+",";   ////////////////////
+         	                instruction1 += instruction;
+         	                let mode = step.travel_mode;          // works
+         	            }
+         	            let result1 = instruction1.slice(0, -1);
+         	                console.log(result1); 
+         	            $("#mapContent").append(result1);
+         	        }        
+         	    }
+        }else{
      		return getDb()
     	 };
      }
@@ -359,9 +416,8 @@ function myList(festival_id) {
 	}
 	});
 }         
-	$(function () {	
-		getDb();
-		      });
+
+	
 </script>
 
 </head>

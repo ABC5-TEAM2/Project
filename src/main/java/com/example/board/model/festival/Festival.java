@@ -28,7 +28,8 @@ public class Festival {
 	private String main_img_thumb;
 	private String itemcntnts;
 	private String middle_size_rm1;
-	private Long wish_list;
+	
+	private Long wish_list_fes;
 	private Long place_like;
 	private Long hit;
 	private boolean liked;
@@ -45,11 +46,11 @@ public class Festival {
 	  }
 	  
 	  public void addWishList() {
-	      this.wish_list++;
+	      this.wish_list_fes++;
 	  }
 
 	public void removeWishList() {
-	    this.wish_list--;
+	    this.wish_list_fes--;
 	}
 
 	  public void setLiked(boolean liked) {

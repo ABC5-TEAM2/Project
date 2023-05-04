@@ -125,20 +125,18 @@ video {
   /*filter:opacity(60%);*/
 }
 
-#maps-container,
-#maps-container2{
+#maps-container{
   width: 100%;
   height: 400px;
 }
 
-#map,map2{
+#map{
   
   float: left;
   width: 600px;
   height: 400px;
 }
-#map-contents,
-#map-contents2{
+#map-contents{
   float: left;
   width: 600px;
   height: 400px;

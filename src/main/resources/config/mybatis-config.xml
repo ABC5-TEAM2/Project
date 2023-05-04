@@ -13,5 +13,7 @@
         <typeAlias type="com.example.board.model.tourist.Tourist_Spot" alias="tourist"/>
         <typeAlias type="com.example.board.model.festival.Festival" alias="festival"/>
         <typeAlias type="com.example.board.model.review.Review" alias="review"/>
+        
+        <typeAlias type="com.example.board.model.course.Course" alias="course"/>
     </typeAliases>
 </configuration>

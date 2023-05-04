@@ -31,9 +31,9 @@ import com.example.board.util.PageNavigator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequestMapping("festival")
+@RequestMapping("course")
 @Controller
-public class FestivalController {
+public class CourseController {
 	
 	@Autowired
 	private FestivalMapper festivalMapper;
@@ -48,6 +48,7 @@ public class FestivalController {
     	log.info("축제 실행");
 		List<Festival> findAllFestival = festivalMapper.findAllFestival();
 
+    	log.info(" findAllTourist:{}", findAllFestival);
     	
     	return ResponseEntity.ok(findAllFestival);
     }
@@ -59,21 +60,19 @@ public class FestivalController {
 //		log.info("searchText: {}", searchText);
 //		int total = reviewService.getTotal(searchText);
 //		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-
 		// 데이터베이스에 저장된 모든 Board 객체를 리스트 형태로 받는다.
 //		List<Review> reviews = reviewService.findReviews(searchText, navi.getStartRecord(), navi.getCountPerPage());
-
-		List<Festival> findAllFestival = festivalMapper.findAllFestival();
-
-		// Board 리스트를 model 에 저장한다.
-		model.addAttribute("findAllFestival", findAllFestival);
-		
-		// PageNavigation 객체를 model 에 저장한다.
+    	// PageNavigation 객체를 model 에 저장한다.
 //		model.addAttribute("navi", navi);
 //		model.addAttribute("searchText", searchText);
 
-		// board/list.html 를 찾아서 리턴한다.
-		return "festival/FestivalList";
+    	
+		List<Festival> findAllFestival = festivalMapper.findAllFestival();
+		
+		model.addAttribute("findAllFestival", findAllFestival);
+		
+		
+		return "course/CourseList";
 	}
     
  // 게시글 읽기
@@ -84,6 +83,7 @@ public class FestivalController {
  		// board_id 에 해당하는 게시글을 데이터베이스에서 찾는다.
  		
  		Festival festival= festivalMapper.findFestival(festival_id);
+ 		log.info("festival:{}",festival);
  		// board_id에 해당하는 게시글이 없으면 리스트로 리다이렉트 시킨다.
  		if (festival == null) {
  			log.info("축제 없음");
@@ -121,6 +121,7 @@ public class FestivalController {
 		Festival festival= festivalMapper.findFestival(festival_id);
 		FestivalLikes festivalLikes = new FestivalLikes();
 		String member_id = loginMember.getMember_id();
+		log.info("findLikesById:{}",findLikesById);
 		
 		Object like_id = null;
 		for (int i = 0; i < findLikesById.size(); i++) {
@@ -144,6 +145,7 @@ public class FestivalController {
 				festival.setLiked(false);
 		    }
 			festivalMapper.updateFestival(festival);
+		    log.info("festival:{}",festival);
 	    return ResponseEntity.ok(festival);
 	  } else {
 	    // 관광지 정보가 없는 경우, 오류 응답을 반환합니다.
@@ -156,6 +158,7 @@ public class FestivalController {
 														,@SessionAttribute(value = "loginMember", required = false) Member loginMember
 														) {
 
+ 		log.info("안녕:{}");
 		List<String> findFestivalMyList = festivalMapper.findMyListMemberId(festival_id);
 		List<Map<String, Object>> findMyListById = festivalMapper.findMyListById(festival_id);
 		Festival festival= festivalMapper.findFestival(festival_id);
@@ -164,6 +167,7 @@ public class FestivalController {
 		FestivalMyList festivalMyList = new FestivalMyList();
 		String member_id = loginMember.getMember_id();
 		
+		log.info("findMyListById:{}",findMyListById);
 		
 		Object wishboard_id = null;
 		for (int i = 0; i < findMyListById.size(); i++) {
@@ -187,6 +191,7 @@ public class FestivalController {
 				festival.setJjim(false);
 		    }
 		    
+		    log.info("festival:{}",festival);
 		    
 	    return ResponseEntity.ok(festival);
 	  } else {

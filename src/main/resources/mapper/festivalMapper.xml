@@ -37,7 +37,7 @@
         update festival
         <set>
             <if test="place_like != null">place_like = #{place_like},</if>
-            <if test="wish_list != null">wish_list = #{wish_list},</if>
+            <if test="wish_list_fes != null">wish_list_fes = #{wish_list_fes},</if>
         </set>
         where festival_id = #{festival_id}
     </update>
