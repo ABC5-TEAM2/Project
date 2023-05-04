@@ -26,7 +26,6 @@
         
         directionsService.route(request, function(response, status) {
       	  
-          alert(status);  // 확인용 Alert..미사용시 삭제
           
           if (status == google.maps.DirectionsStatus.OK) {
               directionsDisplay.setDirections(response);
