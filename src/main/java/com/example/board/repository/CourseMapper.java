@@ -5,61 +5,58 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.board.model.festival.Festival;
-import com.example.board.model.festival.FestivalLikes;
-import com.example.board.model.festival.FestivalMyList;
-import com.example.board.model.tourist.TouristSpotMyList;
-import com.example.board.model.tourist.Tourist_Spot;
+import com.example.board.model.course.Course;
+import com.example.board.model.course.CourseLikes;
+import com.example.board.model.course.CourseMyList;
+import com.example.board.model.course.CoursePic;
+
 
 
 @Mapper
 public interface CourseMapper {
 	
-	Double findFestivalLat(Long festival_id) ;
-	
-	Double findFestivalLng(Long festival_id) ;
-		
-	Festival findFestival(Long festival_id);
 
-	List<Festival> findAllFestival();
+		
+	Course findCourse(Long course_id);
+
+	List<Course> findAllCourse();
 	
 	//review_place를 위해서
-	List<Object> findAllFestivalName();
+	List<Object> findAllCourseName();
 
 //좋아요 기능	
-	void updateFestival(Festival updateFestival);
+	void updateCourse(Course updateCourse);
 	
-	List<String> findLikesMemberId(Long festival_id);
+	List<String> findLikesMemberId(Long course_id);
 	
-	List<Map<String,Object>> findLikesById(Long festival_id);
+	List<Map<String,Object>> findLikesById(Long course_id);
 	
-	void saveLikes(FestivalLikes festivalLikes);
+	void saveLikes(CourseLikes CourseLikes);
 	
 	void deleteLike(Object like_id);
 //	
 	//찜하기
 	
-	void saveMyList(FestivalMyList festivalMyList);
+	void saveMyList(CourseMyList CourseMyList);
 	
-	List<Map<String,Object>> findMyListById(Long festival_id);
+	List<Map<String,Object>> findMyListById(Long course_id);
 	
-	List<String> findMyListMemberId(Long festival_id);
+	List<String> findMyListMemberId(Long course_id);
 	
 	//테이블 다른걸로!
 	void deleteMyList(Object wishboard_id);
 	
 //
 	
-	
-	
 	//
 	List<Map<String, Object>> findMyListByMemberId(String member_id);
 	
-	
-	
 	//조회수
-	void addHit(Festival festival);
+	void addHit(Course Course);
 	
+	
+	//코스 사진 가져오기!	
+	List<CoursePic> findCoursePic(Long course_set);
 	
 	
 

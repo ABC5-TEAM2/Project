@@ -9,12 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.board.model.course.Course;
 import com.example.board.model.festival.Festival;
 import com.example.board.model.member.LoginForm;
 import com.example.board.model.member.Member;
 import com.example.board.model.member.MemberJoinForm;
 import com.example.board.model.review.Review;
 import com.example.board.model.tourist.Tourist_Spot;
+import com.example.board.repository.CourseMapper;
 import com.example.board.repository.FestivalMapper;
 import com.example.board.repository.MemberMapper;
 import com.example.board.repository.ReviewMapper;
@@ -39,7 +41,8 @@ public class MemberController {
     private final MemberMapper memberMapper;
 	private final TouristSpotMapper touristMapper;
 	private final FestivalMapper festivalMapper;
-	private final ReviewMapper reviewmapper;
+	private final ReviewMapper reviewMapper;
+	private final CourseMapper courseMapper;
 
     // 회원가입 페이지 이동
     @GetMapping("join")
@@ -146,13 +149,10 @@ public class MemberController {
                         ,@SessionAttribute(value = "loginMember", required = false) Member loginMember
                         ,Model model) {
     	log.info("안녕");
+    	
+    	//명소 찜 목록 **서비스 처리 필요
     	List<Map<String, Object>> resultList = touristMapper.findMyListByMemberId(loginMember.getMember_id());
-    	
-    	
-    	//명소 찜 목록
     	List<Tourist_Spot> findMyListSpots = new ArrayList<>();
-    	
-    
     	for (int i = 0; i < resultList.size(); i++) {
     		 Map<String, Object> resultMap = resultList.get(i);
 		    Object idObj = resultMap.get("TOURIST_SPOT_ID");
@@ -163,19 +163,34 @@ public class MemberController {
     	model.addAttribute("findMyListSpots", findMyListSpots);
     	
     	
-    	//축제 찜 목록
+    	//축제 찜 목록  **서비스 처리 필요
     	List<Map<String, Object>> resultList2 = festivalMapper.findMyListByMemberId(loginMember.getMember_id());
-    	log.info("resultList2:{}",resultList2);
-    	
     	List<Festival> findMyListFes = new ArrayList<>();
+    	
     	for (int i = 0; i < resultList2.size(); i++) {
     		 Map<String, Object> resultMap2 = resultList2.get(i);
 		    Object idObj2 = resultMap2.get("FESTIVAL_ID");
-		    Long festivalId = ((Number) idObj2).longValue(); // id가 Number 타입일 수도 있으므로 longValue()로 Long 타입으로 변환
-		    Festival festival= festivalMapper.findFestival(festivalId);
+		    Long festival_id = ((Number) idObj2).longValue(); // id가 Number 타입일 수도 있으므로 longValue()로 Long 타입으로 변환
+		    Festival festival= festivalMapper.findFestival(festival_id);
 		    findMyListFes.add(festival);
     	}
     	model.addAttribute("findMyListFes", findMyListFes);
+    	
+    	//축제 찜 목록 **서비스 처리 필요
+    	
+    	List<Map<String, Object>> resultList3 = courseMapper.findMyListByMemberId(loginMember.getMember_id());
+    	List<Course> findMyListCos = new ArrayList<>();
+    	
+    	for (int i = 0; i < resultList3.size(); i++) {
+    		 Map<String, Object> resultMap3 = resultList3.get(i);
+		    Object idObj3 = resultMap3.get("COURSE_ID");
+		    Long courseId = ((Number) idObj3).longValue(); // id가 Number 타입일 수도 있으므로 longValue()로 Long 타입으로 변환
+		    Course course= courseMapper.findCourse(courseId);
+		    log.info("course:{}",course);
+		    findMyListCos.add(course);
+    	}
+    	model.addAttribute("findMyListCos", findMyListCos);
+    	
     	
         return "member/myLikeList"  ;
     }

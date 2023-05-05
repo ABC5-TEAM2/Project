@@ -40,7 +40,7 @@
 
 		<h1>[ 명소 찜 리스트 ]</h1>
 		<div class="row">
-			<div class="col-md-4 mb-4"
+			<div class="col-md-4 mb-4" th:if="${findMyListSpots}"
 				th:each="tourist, touristStat: ${findMyListSpots}">
 				<a href="#" class="tourlist-spot-images-container"
 					th:data-tourist="${tourist}"> <img
@@ -53,11 +53,16 @@
 					</div>
 				</a>
 			</div>
+			<div th:if="${#lists.isEmpty(findMyListSpots)}" >
+				<h3>찜한 명소가 없습니다.</h3>
+			</div>
+			
+			
 		</div>
 		
 		<h1>[ 축제 찜 리스트 ]</h1>
 		<div class="row">
-			<div class="col-md-4 mb-4"
+			<div class="col-md-4 mb-4" th:if="${findMyListFes}"
 				th:each="festival, festivalStat: ${findMyListFes}">
 				<a href="#" class="tourlist-spot-images-container"
 					th:data-festival="${festival}"> <img
@@ -70,8 +75,31 @@
 					</div>
 				</a>
 			</div>
+			<div th:if="${#lists.isEmpty(findMyListFes)}" >
+				<h3>찜한 축제가 없습니다.</h3>
+			</div>
+			
+			
 		</div>
-		
+		<h1>[ 코스 찜 리스트 ]</h1>
+		<div class="row">
+			<div class="col-md-4 mb-4" th:if="${findMyListCos}"
+				th:each="course, courseStat: ${findMyListCos}">
+				<a href="#" class="tourlist-spot-images-container"
+					th:data-course="${course}"> <img
+					th:src="@{${course.main_img}}" alt="임시이미지4"
+					class="tourlist-spot-images"
+					th:onclick="|location.href='/course/CourseInfo?course_id=${course.course_id}'|">
+					<div class="tourlist-spot-images-place">
+						<h3 class="tourlist-spot-images-place"
+							th:text="${course.course_title}"></h3>
+					</div>
+				</a>
+			</div>
+			<div th:if="${#lists.isEmpty(findMyListCos)}" >
+				<h3>찜한 코스가 없습니다.</h3>
+			</div>
+		</div>
 	</div>
 
 </body>
