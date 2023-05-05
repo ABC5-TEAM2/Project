@@ -1,5 +1,7 @@
 package com.example.board.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +66,7 @@ public class FestivalController {
 //		List<Review> reviews = reviewService.findReviews(searchText, navi.getStartRecord(), navi.getCountPerPage());
 
 		List<Festival> findAllFestival = festivalMapper.findAllFestival();
+		
 
 		// Board 리스트를 model 에 저장한다.
 		model.addAttribute("findAllFestival", findAllFestival);

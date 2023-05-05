@@ -29,7 +29,7 @@
       <th>조회수</th>
       <th>작성일</th>
     </tr>
-    <tr th:each="review, reviewStat: ${revies}">
+    <tr th:if="${revies}"  th:each="review, reviewStat: ${revies}">
       <td th:text="${reviewStat.count}" class="center"></td>
       <td th:text="${review.review_place}" class="center"></td>
       <td class="center"><a th:text="${review.title}" th:href="@{/review/read(review_id=${review.review_id})}"></a></td>
@@ -37,6 +37,10 @@
       <td th:text="${review.hit}" class="center"></td>
       <td th:text="${#temporals.format(review.created_time, 'yyyy-MM-dd HH:mm')}" class="center"></td>
     </tr>
+    
+	<tr th:unless="${revies}">
+			<td class="center" colspan="6">리뷰가 없습니다.</td>
+   </tr> 
   </table>
   <p>
   <div id="navigator" class="center">

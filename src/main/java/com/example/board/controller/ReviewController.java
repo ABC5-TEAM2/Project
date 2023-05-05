@@ -89,7 +89,7 @@ public class ReviewController {
     public String write(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("writeForm") ReviewWriteForm reviewWriteForm,
             BindingResult result,
-            @RequestParam(name = "file1", required = false) MultipartFile file,
+            @RequestParam(name = "file1", required = false) MultipartFile file1,
             @RequestParam(name = "file2", required = false) MultipartFile file2){
         // 로그인 상태가 아니면 로그인 페이지로 보낸다.
         if (loginMember == null) {
@@ -107,7 +107,7 @@ public class ReviewController {
         // board 객체에 로그인한 사용자의 아이디를 추가한다.
         review.setMember_id(loginMember.getMember_id());
         // board 객체를 저장한다.
-        reviewService.saveReview(review, file,file2);
+        reviewService.saveReview(review, file1,file2);
 
         // board/list 로 리다이렉트한다.
         return "redirect:/review/list";
@@ -181,7 +181,6 @@ public class ReviewController {
 
         // 첨부파일을 찾는다.
         List<AttachedImg> files = reviewService.findFilesByReviewId(review_id);
-        log.info("files :{}",files);
         model.addAttribute("files", files);
 
         // board/read.html 를 찾아서 리턴한다.

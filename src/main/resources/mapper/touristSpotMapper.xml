@@ -22,9 +22,16 @@
         select * from tourist_Spot where tourist_Spot_id=#{tourist_Spot_id}
     </select>
     
-    <select id="findAllTourist" resultType="tourist">
-        select * from tourist_Spot 
+    
+ 	<!-- 조회 순으로 재정렬 -->
+    <select id="findAllTourist" resultMap="touristResultMap">
+        select * from tourist_Spot order by hit desc
     </select>
+    <resultMap type="tourist" id="touristResultMap">
+		<id property="id" column="id" />
+		<result property="hit" column="hit" />
+	</resultMap>
+    
     
     
      <select id="findAllTouristName" resultType="tourist">

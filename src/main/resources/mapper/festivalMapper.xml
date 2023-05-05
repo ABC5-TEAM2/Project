@@ -20,12 +20,18 @@
      <select id="findFestival" resultType="festival">
         select * from festival where festival_id=#{festival_id}
     </select>
+
+
+		<!-- 죻아요 순으로 재정렬 -->
+	 <select id="findAllFestival" resultMap="festivalResultMap">
+		select * from festival order by place_like desc
+	</select>
+	<resultMap type="festival" id="festivalResultMap">
+		<id property="id" column="id" />
+		<result property="place_like" column="place_like" />
+	</resultMap>
     
     
-    
-    <select id="findAllFestival" resultType="festival">
-        select * from festival 
-    </select>
     
     <select id="findAllFestivalName" resultType="festival">
         select MAIN_TITLE from festival 

@@ -43,7 +43,7 @@
 </head>
 <body>
 	<div id="container">
-		<h1>[ 부산 축제 리스트 ]</h1>
+		<h1>[ 부산 축제 리스트 ] - 좋아요 순으로</h1>
 
 
 		<div class="row">
@@ -60,6 +60,11 @@
 							th:text="${festival.main_title}"></h3>
 					</div>
 				</a>
+				<a>
+					<a class="btn btn-danger" th:utext="'좋아요 수 : '+${festival.place_like}"></a>
+					<a class="btn btn-warning" th:utext="'조회수 : '+${festival.hit}"></a>
+				</a>
+				
 			</div>
 		</div>
 	</div>
